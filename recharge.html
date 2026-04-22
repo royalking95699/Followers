@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Mobile Recharge Offer</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <style>
+        /* Custom Animations */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+        .animate-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none;
+        }
+        body {
+            background-color: #f0f2f5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body class="flex justify-center items-start min-h-screen pt-0 md:pt-10">
+
+    <!-- Main Container -->
+    <div id="app" class="w-full max-w-md bg-white md:rounded-xl shadow-2xl overflow-hidden min-h-screen md:min-h-0 relative">
+        
+        <!-- Header -->
+        <header class="bg-gradient-to-r from-blue-600 to-indigo-700 p-5 text-center text-white shadow-md">
+            <h1 class="text-2xl font-bold uppercase tracking-wide">Mega Recharge Offer</h1>
+            <p class="text-sm opacity-90 mt-1">Limited Time: Get Free Data & Talktime</p>
+        </header>
+
+        <!-- Step 1: Input Form -->
+        <div id="step-input" class="p-6">
+            <!-- Carrier Logos -->
+            <div class="flex justify-center gap-4 mb-8">
+                <div class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-red-600 flex items-center justify-center text-white font-bold shadow-sm">Airtel</div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-blue-600 flex items-center justify-center text-white font-bold shadow-sm">Jio</div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <div class="w-14 h-14 rounded-full bg-yellow-500 flex items-center justify-center text-black font-bold shadow-sm">Vi</div>
+                </div>
+            </div>
+
+            <form id="rechargeForm" onsubmit="startProcessing(event)">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="mobile">Mobile Number</label>
+                    <input type="tel" id="mobile" pattern="[0-9]{10}" required placeholder="Enter 10-digit number" 
+                           class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none transition duration-200">
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="plan">Select Plan</label>
+                    <select id="plan" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:border-blue-500 focus:ring-2 focus:ring-blue-200 outline-none bg-white transition duration-200">
+                        <option value="28days">28 Days - 1.5GB/Day + Unlimited Calls</option>
+                        <option value="56days">56 Days - 2GB/Day + Unlimited Calls</option>
+                        <option value="84days">84 Days - 3GB/Day + Disney+ Hotstar</option>
+                        <option value="365days">1 Year - 2.5GB/Day + Prime Video</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-4 rounded-lg shadow-md transform active:scale-95 transition duration-200 text-lg">
+                    Start Recharge
+                </button>
+            </form>
+            
+            <div class="mt-8 text-center">
+                <p class="text-xs text-gray-400">Secure 256-bit SSL Connection</p>
+                <div class="flex justify-center mt-2 space-x-1">
+                    <div class="w-1 h-1 bg-green-500 rounded-full"></div>
+                    <div class="w-1 h-1 bg-green-500 rounded-full"></div>
+                    <div class="w-1 h-1 bg-green-500 rounded-full"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Step 2: Processing Overlay -->
+        <div id="step-processing" class="hidden absolute inset-0 bg-white z-50 flex flex-col items-center justify-center p-8 text-center">
+            <div class="loader mb-6"></div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2">Processing Request...</h2>
+            <p id="processing-text" class="text-gray-600">Connecting to server...</p>
+        </div>
+
+        <!-- Step 3: Verification / Share -->
+        <div id="step-verify" class="hidden p-6 text-center">
+            <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6 text-left rounded shadow-sm">
+                <div class="flex">
+                    <div class="flex-shrink-0">
+                        <svg class="h-5 w-5 text-yellow-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                    <div class="ml-3">
+                        <p class="text-sm text-yellow-700 font-bold">
+                            Verification Required!
+                        </p>
+                        <p class="text-xs text-yellow-600 mt-1">
+                            To activate your free recharge, you must share this offer with 5 friends or groups on WhatsApp.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="mb-2 flex justify-between text-sm font-semibold text-gray-700">
+                <span>Verification Status</span>
+                <span id="progress-text">0%</span>
+            </div>
+            <div class="w-full bg-gray-200 rounded-full h-4 mb-8 overflow-hidden">
+                <div id="progress-bar" class="bg-green-500 h-4 rounded-full transition-all duration-500 ease-out" style="width: 0%"></div>
+            </div>
+
+            <!-- Share Button -->
+            <button id="btn-share" onclick="handleShare()" class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg shadow-lg flex items-center justify-center gap-2 mb-4 transform active:scale-95 transition duration-200">
+                <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+                Share on WhatsApp
+            </button>
+            <p class="text-xs text-gray-500 mb-6">You must share to complete verification.</p>
+
+            <!-- Final Button (Initially Hidden) -->
+            <button id="btn-claim" onclick="handleClaim()" class="hidden w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-lg shadow-xl animate-bounce text-xl">
+                Claim Your Recharge Now
+            </button>
+        </div>
+
+        <!-- Live Users Footer -->
+        <div class="bg-gray-50 border-t border-gray-200 p-3 text-center">
+            <p class="text-sm text-gray-600 flex items-center justify-center gap-2">
+                <span class="relative flex h-3 w-3">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                </span>
+                <span id="live-users">124</span> users are recharging now
+            </p>
+        </div>
+
+    </div>
+
+    <!-- Logic Script -->
+    <script>
+        // State
+        let shareCount = 0;
+        const maxShares = 5;
+        const instagramUrl = "https://www.instagram.com/shri_hari_vishwakarma_?igsh=YjZnOHQzMjkzN3Jz";
+
+        // Step 1: Handle Form Submit
+        function startProcessing(e) {
+            e.preventDefault();
+            const mobileInput = document.getElementById('mobile');
+            if(mobileInput.value.length !== 10) {
+                alert("Please enter a valid 10-digit mobile number.");
+                return;
+            }
+
+            // Hide input, show processing
+            document.getElementById('step-input').classList.add('hidden');
+            document.getElementById('step-processing').classList.remove('hidden');
+
+            // Simulate processing steps
+            const statusText = document.getElementById('processing-text');
+            
+            setTimeout(() => { statusText.innerText = "Verifying Mobile Number..."; }, 1500);
+            setTimeout(() => { statusText.innerText = "Checking Plan Availability..."; }, 3000);
+            setTimeout(() => { statusText.innerText = "Activating Offer..."; }, 4500);
+            setTimeout(() => {
+                document.getElementById('step-processing').classList.add('hidden');
+                document.getElementById('step-verify').classList.remove('hidden');
+            }, 6000);
+        }
+
+        // Step 2: Handle WhatsApp Share
+        function handleShare() {
+            // Construct message
+            const currentUrl = window.location.href;
+            const text = encodeURIComponent(`*Free Mobile Recharge Offer!* 
+I just got my free recharge. Get yours now before the offer ends! 
+Click here: ${currentUrl}`);
+            const whatsappUrl = `https://wa.me/?text=${text}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+
+            // Increment Progress (Simulated)
+            setTimeout(() => {
+                if (shareCount < maxShares) {
+                    shareCount++;
+                    const progressPercentage = (shareCount / maxShares) * 100;
+                    
+                    // Update UI
+                    document.getElementById('progress-bar').style.width = `${progressPercentage}%`;
+                    document.getElementById('progress-text').innerText = `${progressPercentage}%`;
+
+                    if (shareCount === maxShares) {
+                        completeVerification();
+                    }
+                }
+            }, 1000); // Small delay to simulate returning from app
+        }
+
+        function completeVerification() {
+            // Hide Share button, Show Claim button
+            document.getElementById('btn-share').classList.add('hidden');
+            document.getElementById('btn-claim').classList.remove('hidden');
+            document.querySelector('.text-xs.text-gray-500').innerText = "Verification Successful!";
+            document.querySelector('.text-xs.text-gray-500').classList.add('text-green-600', 'font-bold');
+        }
+
+        // Step 3: Handle Claim (Redirect)
+        function handleClaim() {
+            // Redirect to Instagram
+            window.location.href = "https://www.instagram.com/shri_hari_vishwakarma_?igsh=YjZnOHQzMjkzN3Jz";
+        }
+
+        // Extra: Live User Counter Simulation
+        setInterval(() => {
+            const el = document.getElementById('live-users');
+            let current = parseInt(el.innerText);
+            const change = Math.floor(Math.random() * 5) - 2; // -2 to +2
+            let next = current + change;
+            if (next < 50) next = 50;
+            if (next > 500) next = 500;
+            el.innerText = next;
+        }, 3000);
+    </script>
+</body>
+</html>
